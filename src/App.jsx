@@ -1,5 +1,5 @@
 import ResultPage from './pages/ResultPage'
-import NotFoundPage from './pages/NotFoundPage'
+import ScannerPage from './pages/ScannerPage'
 
 function App() {
   const uniqueId = window.location.pathname.replace(/^\/+/, '')
@@ -8,7 +8,7 @@ function App() {
     return <ResultPage id={uniqueId} />
   }
 
-  return <NotFoundPage />
+  return <ScannerPage />
 }
 
 export default App

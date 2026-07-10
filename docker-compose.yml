@@ -3,3 +3,11 @@ services:
     build: .
     ports:
       - "8080:80"
+      - "8443:443"
+    environment:
+      - SERVER_NAME=192.168.101.6
+    volumes:
+      - ssl_certs:/etc/nginx/ssl
+
+volumes:
+  ssl_certs:
