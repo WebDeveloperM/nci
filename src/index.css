@@ -1,0 +1,110 @@
+:root {
+  --text: #726c5c;
+  --text-h: #1a1712;
+  --bg: #efe9db;
+  --border: #e2dcc9;
+  --code-bg: #f4f0e4;
+  --accent: #ef6c45;
+  --accent-bg: rgba(239, 108, 69, 0.12);
+  --accent-border: rgba(239, 108, 69, 0.5);
+  --social-bg: #ffffff;
+  --shadow:
+    rgba(60, 47, 25, 0.1) 0 10px 25px -8px, rgba(60, 47, 25, 0.06) 0 4px 10px -4px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #a9a293;
+    --text-h: #f5f2ea;
+    --bg: #1b1915;
+    --border: #34312a;
+    --code-bg: #23211c;
+    --accent: #ff8a63;
+    --accent-bg: rgba(255, 138, 99, 0.16);
+    --accent-border: rgba(255, 138, 99, 0.5);
+    --social-bg: #24221d;
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 25px -8px, rgba(0, 0, 0, 0.3) 0 4px 10px -4px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
