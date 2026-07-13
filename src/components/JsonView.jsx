@@ -17,7 +17,7 @@ function buildPhotoUrl(base64) {
   return `data:image/jpeg;base64,${base64}`
 }
 
-function JsonValue({ value }) {
+function JsonValue({ value, photoExtra }) {
   if (value === null || value === undefined) {
     return <span className="json-value json-empty">—</span>
   }
@@ -47,7 +47,10 @@ function JsonValue({ value }) {
             <dt>{KEY_LABELS[key] ?? key}</dt>
             <dd>
               {key === 'Foto' && typeof val === 'string' && val ? (
-                <img className="json-photo" src={buildPhotoUrl(val)} alt="Foto" />
+                <div className="json-photo-row">
+                  <img className="json-photo" src={buildPhotoUrl(val)} alt="Foto" />
+                  {photoExtra}
+                </div>
               ) : (
                 <JsonValue value={val} />
               )}
@@ -61,8 +64,8 @@ function JsonValue({ value }) {
   return <span className="json-value">{String(value)}</span>
 }
 
-function JsonView({ data }) {
-  return <JsonValue value={data} />
+function JsonView({ data, photoExtra }) {
+  return <JsonValue value={data} photoExtra={photoExtra} />
 }
 
 export default JsonView

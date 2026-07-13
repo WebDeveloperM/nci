@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import JsonView from '../components/JsonView'
 import NotFoundPage from './NotFoundPage'
+import DetailsPage from './DetailsPage'
 import './ResultPage.css'
 
 const TARGET_URL = import.meta.env.VITE_TARGET_URL
@@ -10,8 +11,10 @@ const AUTH_PASS = import.meta.env.VITE_AUTH_PASS
 function ResultPage({ id }) {
   const [status, setStatus] = useState('loading')
   const [data, setData] = useState(null)
+  const detailsMode = new URLSearchParams(window.location.search).has('details')
 
   useEffect(() => {
+    if (detailsMode) return
     const controller = new AbortController()
 
     async function fetchResult() {
@@ -44,7 +47,11 @@ function ResultPage({ id }) {
 
     fetchResult()
     return () => controller.abort()
-  }, [id])
+  }, [id, detailsMode])
+
+  if (detailsMode) {
+    return <DetailsPage id={id} />
+  }
 
   if (status === 'error') {
     return <NotFoundPage />
@@ -63,7 +70,20 @@ function ResultPage({ id }) {
         <div className="result-success">
           <h1>НСИ продукта</h1>
           <div className="result-card">
-            <JsonView data={data} />
+            <JsonView
+              data={data}
+              photoExtra={(
+                <button
+                  type="button"
+                  className="result-details-button"
+                  onClick={() => {
+                    window.location.href = `${window.location.pathname}?details=1`
+                  }}
+                >
+                  Подробнее
+                </button>
+              )}
+            />
           </div>
         </div>
       )}

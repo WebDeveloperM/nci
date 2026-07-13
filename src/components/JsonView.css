@@ -63,6 +63,13 @@
   box-shadow: var(--shadow);
 }
 
+.json-photo-row {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 @media (max-width: 480px) {
   .json-photo {
     width: 100%;
