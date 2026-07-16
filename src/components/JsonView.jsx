@@ -11,11 +11,7 @@ const KEY_LABELS = {
   Foto: 'Фото',
 }
 
-function getKeyLabel(key) {
-  const dopDataMatch = key.match(/^DopData(\d+)$/)
-  if (dopDataMatch) return `Доп. данные ${dopDataMatch[1]}`
-  return KEY_LABELS[key] ?? key
-}
+const DOP_DATA_KEY_REGEX = /^DopData\d+$/
 
 function buildPhotoUrl(base64) {
   if (base64.startsWith('data:')) return base64
@@ -45,23 +41,40 @@ function JsonValue({ value }) {
       .filter(([key]) => !HIDDEN_KEYS.includes(key.toLowerCase()))
       .sort(([a], [b]) => (a === 'Foto' ? -1 : b === 'Foto' ? 1 : 0))
     if (entries.length === 0) return <span className="json-value json-empty">{'{}'}</span>
+
+    const regularEntries = entries.filter(([key]) => !DOP_DATA_KEY_REGEX.test(key))
+    const dopDataEntries = entries.filter(([key]) => DOP_DATA_KEY_REGEX.test(key))
+
     return (
-      <dl className="json-object">
-        {entries.map(([key, val]) => (
-          <div className="json-row" key={key}>
-            <dt>{getKeyLabel(key)}</dt>
-            <dd>
-              {key === 'Foto' && typeof val === 'string' && val ? (
-                <div className="json-photo-row">
-                  <img className="json-photo" src={buildPhotoUrl(val)} alt="Foto" />
-                </div>
-              ) : (
+      <>
+        {regularEntries.length > 0 && (
+          <dl className="json-object">
+            {regularEntries.map(([key, val]) => (
+              <div className="json-row" key={key}>
+                <dt>{KEY_LABELS[key] ?? key}</dt>
+                <dd>
+                  {key === 'Foto' && typeof val === 'string' && val ? (
+                    <div className="json-photo-row">
+                      <img className="json-photo" src={buildPhotoUrl(val)} alt="Foto" />
+                    </div>
+                  ) : (
+                    <JsonValue value={val} />
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
+        {dopDataEntries.length > 0 && (
+          <ul className="json-dopdata-list">
+            {dopDataEntries.map(([key, val]) => (
+              <li key={key}>
                 <JsonValue value={val} />
-              )}
-            </dd>
-          </div>
-        ))}
-      </dl>
+              </li>
+            ))}
+          </ul>
+        )}
+      </>
     )
   }
 

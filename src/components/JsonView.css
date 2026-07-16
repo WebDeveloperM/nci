@@ -70,6 +70,22 @@
   gap: 16px;
 }
 
+.json-dopdata-list {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.json-dopdata-list li {
+  font-size: 15px;
+  color: var(--text-h);
+  word-break: break-word;
+}
+
 @media (max-width: 480px) {
   .json-photo {
     width: 100%;
