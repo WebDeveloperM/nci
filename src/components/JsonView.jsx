@@ -8,8 +8,13 @@ const KEY_LABELS = {
   EdIzm: 'Ед. изм.',
   Klass: 'Класс',
   NameFull: 'Полное наименование',
-  DopData1: 'Доп. данные 1',
   Foto: 'Фото',
+}
+
+function getKeyLabel(key) {
+  const dopDataMatch = key.match(/^DopData(\d+)$/)
+  if (dopDataMatch) return `Доп. данные ${dopDataMatch[1]}`
+  return KEY_LABELS[key] ?? key
 }
 
 function buildPhotoUrl(base64) {
@@ -17,7 +22,7 @@ function buildPhotoUrl(base64) {
   return `data:image/jpeg;base64,${base64}`
 }
 
-function JsonValue({ value, photoExtra }) {
+function JsonValue({ value }) {
   if (value === null || value === undefined) {
     return <span className="json-value json-empty">—</span>
   }
@@ -44,12 +49,11 @@ function JsonValue({ value, photoExtra }) {
       <dl className="json-object">
         {entries.map(([key, val]) => (
           <div className="json-row" key={key}>
-            <dt>{KEY_LABELS[key] ?? key}</dt>
+            <dt>{getKeyLabel(key)}</dt>
             <dd>
               {key === 'Foto' && typeof val === 'string' && val ? (
                 <div className="json-photo-row">
                   <img className="json-photo" src={buildPhotoUrl(val)} alt="Foto" />
-                  {photoExtra}
                 </div>
               ) : (
                 <JsonValue value={val} />
@@ -64,8 +68,8 @@ function JsonValue({ value, photoExtra }) {
   return <span className="json-value">{String(value)}</span>
 }
 
-function JsonView({ data, photoExtra }) {
-  return <JsonValue value={data} photoExtra={photoExtra} />
+function JsonView({ data }) {
+  return <JsonValue value={data} />
 }
 
 export default JsonView
